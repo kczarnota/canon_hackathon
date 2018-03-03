@@ -9,10 +9,15 @@ def run():
         ret, frame = cap.read()
 
         # Our operations on the frame come here
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # Display the resulting frame
-        cv2.imshow('frame', gray)
+        width = cap.get(3)
+        height = cap.get(4)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        msg = str(width) + ' ' + str(height)
+        cv2.putText(frame, msg, (0, int(height)), font, 4, (255, 255, 255), 2, cv2.LINE_AA)
+        cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
