@@ -6,6 +6,7 @@ def run():
     cap = cv2.VideoCapture(0)
     cap.set(3, 1920)
     cap.set(4, 1080)
+    mark = (200, 300)
 
     while (True):
         # Capture frame-by-frame
@@ -44,7 +45,17 @@ def run():
                 start_point = (x, y)
                 end_point = (x + w, y + h)
 
+
         cv2.rectangle(res, start_point, end_point, (0, 255, 0), 2)
+        pick_w = end_point[0] - start_point[0]
+        pick_h = end_point[1] - start_point[1]
+        mid = (start_point[0] + pick_w//2, start_point[1] + pick_h//2)
+        cv2.circle(res, mid, 60, (0, 0, 255), 3)
+
+        cv2.circle(frame, mark, 60, (255, 0, 0), 3)
+
+        if abs(mark[0] - mid[0]) < 30 and abs(mark[1] - mid[1]) < 30:
+            mark = (0, 0)
 
         #cv2.line(mask, (top, bot), (0, 0), (255, 0, 0), 5)
 
@@ -58,7 +69,7 @@ def run():
         #    print('taken image')
 
         #cv2.circle(res, (int(width/2), int(height/2)), 60, (0,0,255), 3)
-        cv2.imshow('frame', res)
+        cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
